@@ -27,8 +27,10 @@ def build_post_request(args):
 			prot_code = 2
 		post_request += '&' + urllib.quote_plus('pr[]') + '=%d' % prot_code
 
+	# We check if the "keep alive" flag was raised by the user
+	max_anonymity_level = 5 if args.keep_alive else 4
 	# We build the anonymity level
-	for anon in xrange(args.anonymity, 5):
+	for anon in xrange(args.anonymity, max_anonymity_level):
 		post_request += '&' + urllib.quote_plus('a[]') + '=%d' % anon
 	
 	# We build the speed level

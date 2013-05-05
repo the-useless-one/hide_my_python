@@ -43,6 +43,12 @@ def main():
 					-aa to Medium, -aaa to High, etc. (default minimum level:\
 					None)')
 
+	arg_parser.add_argument('-ka', action='store_true',
+			dest='keep_alive',
+			help='flag used to determine if proxies with the Keep Alive\
+					option should be returned, as they are likely honey pot\
+					(default: no)')
+
 	# The user can specify the required speed
 	arg_parser.add_argument('-s', default=1, action='count', dest='speed',
 			help='flag used to determine the proxies minimum speed\

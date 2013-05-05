@@ -68,9 +68,6 @@ def generate_proxy(args):
 	html = connect.send_data('https://hidemyass.com/proxy-list/', post_request)
 
 	# We find every chunk of code corresponding to a proxy in the HTML code
-	proxy_html_iter = regex.PROXY_HTML.finditer(html)
-	
-	# We parse every proxy HTML code
-	for proxy_html in proxy_html_iter:
-		yield parse_proxy(proxy_html.group(0))
+	for proxy_html in regex.PROXY_HTML.findall(html):
+		yield parse_proxy(proxy_html)
 

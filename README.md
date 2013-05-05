@@ -204,7 +204,7 @@ will only return proxies with a connection time level of at least Fast.
 
 HideMyPython! - A parser for the free proxy list on HideMyAss!
 
-the-useless-one - Copyright © 2013
+Yannick Méheut <useless@utouch.fr> - Copyright © 2013
 
 This program is free software: you can redistribute it and/or modify it 
 under the terms of the GNU General Public License as published by the 
