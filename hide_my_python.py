@@ -46,7 +46,7 @@ def main():
 	arg_parser.add_argument('-ka', action='store_true',
 			dest='keep_alive',
 			help='flag used to determine if proxies with the Keep Alive\
-					option should be returned, as they are likely honey pot\
+					option should be returned, as they are likely honey pots\
 					(default: no)')
 
 	# The user can specify the required speed

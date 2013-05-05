@@ -47,7 +47,7 @@ Don't forget to make the script executable with:
 
 To see a list of the options, just issue:
 
-	./hide_my_python -h
+	./hide_my_python.py -h
 	usage: hide_my_python [-h] -o DATABASE_FILE [-ct COUNTRIES_FILE]
 	                      [-p PORTS [PORTS ...]]
 						  [-pr {http,https,socks} [{http,https,socks} ...]] [-a]
@@ -69,6 +69,9 @@ To see a list of the options, just issue:
 							level, e.g. -a sets the minimum anonymity level to
 							Low, -aa to Medium, -aaa to High, etc. (default
 							minimum level: None)
+	  -ka                   flag used to determine if proxies with the Keep Alive
+							option should be returned, as they are likely honey
+							pots (default: no)
 	  -s                    flag used to determine the proxies minimum speed
 							level, e.g. -s sets the minimum speed level to Medium,
 							-ss to Fast (default minimum level: Slow)
@@ -107,7 +110,7 @@ file. To see a complete list of the available countries, see the file
 The script will only return proxies listening on the specified ports. You can
 specify up to 20 different ports. For example:
 
-	./hide_my_python -p 80 8080 443
+	./hide_my_python.py -p 80 8080 443 -o output.db
 
 will only return proxies listening either on port 80, 8080, or 443.
 
@@ -116,7 +119,7 @@ will only return proxies listening either on port 80, 8080, or 443.
 The script will only return proxies using the specified protocols. The possible
 protocols are HTTP, HTTPS, and SOCKS4/5. For example:
 
-	./hide_my_python -pr http socks
+	./hide_my_python.py -pr http socks -o output.db
 
 will only return proxies using HTTP or SOCKS4/5.
 
@@ -144,15 +147,24 @@ By default, the script doesn't take into account the proxies' anonymity
 (they can have an anonymity level of None, High, Medium, ...). But this
 command:
 
-	./hide_my_python -a
+	./hide_my_python.py -a -o output.db
 
 will only return proxies with an anonymity level of at least Low.
 
 This command:
 
-	./hide_my_python -aa
+	./hide_my_python.py -aa -o output.db
 
 will only return proxies with an anonymity level of at least Medium.
+
+### `keep_alive`
+
+As said on the HideMyAss! proxy list, proxies with the Keep Alive option are
+most likely honey pots. In order to avoir them, the script, by default, doesn't
+retrieve proxies with an anonymity level of High +KA. If you want proxies with
+the Keep Alive option, use this flag:
+
+	./hide_my_python.py -ka -o output.db
 
 ### `speed`
 
@@ -167,13 +179,13 @@ levels:
 By default, the script doesn't take into account the proxies' speed (they can
 have a speed of Slow, Medium, Fast). But this command:
 
-	./hide_my_python -s
+	./hide_my_python.py -s -o output.db
 
 will only return proxies with a speed level of at least Medium.
 
 This command:
 
-	./hide_my_python -ss
+	./hide_my_python.py -ss -o output.db
 
 will only return proxies with a speed level of at least Fast.
 
@@ -190,13 +202,13 @@ time levels:
 By default, the script doesn't take into account the proxies' connection time
 (they can have a connection time of Slow, Medium, Fast). But this command:
 
-	./hide_my_python -c
+	./hide_my_python.py -c -o output.db
 
 will only return proxies with a connection time level of at least Medium.
 
 This command:
 
-	./hide_my_python -cc
+	./hide_my_python.py -cc -o output.db
 
 will only return proxies with a connection time level of at least Fast.
 
@@ -204,7 +216,7 @@ will only return proxies with a connection time level of at least Fast.
 
 HideMyPython! - A parser for the free proxy list on HideMyAss!
 
-Yannick Méheut <useless@utouch.fr> - Copyright © 2013
+Yannick Méheut [<useless@utouch.fr>] - Copyright © 2013
 
 This program is free software: you can redistribute it and/or modify it 
 under the terms of the GNU General Public License as published by the 
