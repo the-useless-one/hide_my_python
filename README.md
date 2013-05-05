@@ -10,9 +10,23 @@
 
 A parser for the free proxy list on HideMyAss!
 
-Fork me on [GitHub](https://github.com/the-useless-one/hide_my_python)
+Fork me on [GitHub](https://github.com/the-useless-one/hide_my_python).
 
 ## HISTORY
+
+I was reading this article on [the blog of the Blue Shell Group](https://blueshellgroup.wordpress.com/2013/04/14/creating-a-private-database-of-proxies-part-1/),
+and I thought at first "Meh, it'll just be parsing". But when I read the second
+part of the article, and saw how HideMyAss! didn't want you to parse its proxy
+list, the mischief that I am wanted to do nothing else but parse its proxy
+list.
+
+So here's my implementation in Python of a parser for the free proxy list on
+HideMyAss! I hope someone will find it useful.
+
+## DISCLAIMER
+
+Oh, and I'm not responsible for anything that happens to you or that you do
+using these proxies. If someone gets pwned, don't look at me.
 
 ## REQUIREMENTS
 
@@ -68,25 +82,129 @@ To see a list of the options, just issue:
 
 ### `database_file`
 
+The proxies will be saved in this file. If the file doesn't exist, it will be
+created. If it exists, the proxies will be appended to it (the file won't be
+overwritten). The database contains only one table, named `proxies`, with the
+following structure:
+
+* `id`: a unique identifier (type: `INTEGER PRIMARY KEY AUTOINCREMENT`)
+* `ip`: the proxy's IP address (type: `TEXT`)
+* `port`: the port the proxy listens on (type: `INTEGER`)
+* `type`: the type of the proxy (HTTP, HTTPS or SOCKS4/5) (type: `TEXT`)
+* `country`: the country the proxy is based in (type: `TEXT`)
+* `anonymity`: the anonymity level guarantied by the proxy (type: `TEXT`)
+* `speed`: the speed level of the proxy (type: `TEXT`)
+* `connection_time`: the connection time of the proxy (type: `TEXT`)
+
 ### `countries_file`
+
+The script will only return proxies based in the countries specified in this
+file. To see a complete list of the available countries, see the file
+`countries_all`.
 
 ### `ports`
 
+The script will only return proxies listening on the specified ports. You can
+specify up to 20 different ports. For example:
+
+	./hide_my_python -p 80 8080 443
+
+will only return proxies listening either on port 80, 8080, or 443.
+
 ### `protocols`
+
+The script will only return proxies using the specified protocols. The possible
+protocols are HTTP, HTTPS, and SOCKS4/5. For example:
+
+	./hide_my_python -pr http socks
+
+will only return proxies using HTTP or SOCKS4/5.
 
 ### `anonymity`
 
+The script will only return proxies guarantying an anonymity level greater
+than the one specified by the user. HideMyAss! proxies have these anonymity
+levels:
+
+* None
+* Low
+* Medium
+* High
+* High + Keep Alive
+
+**WARNING:** Here's what HideMyAss! has to say on proxies with Keep Alive:
+
+> If a high-anonymous proxy supports keep-alive you can consider it to be
+> extremely-anonymous. However, such a host is highly possible to be a
+> honey-pot.
+
+**Use these proxies at your own risk!**
+
+By default, the script doesn't take into account the proxies' anonymity
+(they can have an anonymity level of None, High, Medium, ...). But this
+command:
+
+	./hide_my_python -a
+
+will only return proxies with an anonymity level of at least Low.
+
+This command:
+
+	./hide_my_python -aa
+
+will only return proxies with an anonymity level of at least Medium.
+
 ### `speed`
 
+The script will only return proxies guarantying a speed level greater
+than the one specified by the user. HideMyAss! proxies have these speed 
+levels:
+
+* Slow
+* Medium
+* Fast
+
+By default, the script doesn't take into account the proxies' speed (they can
+have a speed of Slow, Medium, Fast). But this command:
+
+	./hide_my_python -s
+
+will only return proxies with a speed level of at least Medium.
+
+This command:
+
+	./hide_my_python -ss
+
+will only return proxies with a speed level of at least Fast.
+
 ### `connection_time`
+
+The script will only return proxies guarantying a connection time level greater
+than the one specified by the user. HideMyAss! proxies have these connection
+time levels:
+
+* Slow
+* Medium
+* Fast
+
+By default, the script doesn't take into account the proxies' connection time
+(they can have a connection time of Slow, Medium, Fast). But this command:
+
+	./hide_my_python -c
+
+will only return proxies with a connection time level of at least Medium.
+
+This command:
+
+	./hide_my_python -cc
+
+will only return proxies with a connection time level of at least Fast.
 
 ## COPYRIGHT
 
 HideMyPython! - A parser for the free proxy list on HideMyAss!
 
-Yannick Méheut
-
-Copyright © 2013
+the-useless-one - Copyright © 2013
 
 This program is free software: you can redistribute it and/or modify it 
 under the terms of the GNU General Public License as published by the 
