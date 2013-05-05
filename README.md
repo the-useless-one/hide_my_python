@@ -83,7 +83,7 @@ To see a list of the options, just issue:
 	Go to https://hidemyass.com/proxy-list/ to see the different available
 	options.
 
-### `database_file`
+### Database file
 
 The proxies will be saved in this file. If the file doesn't exist, it will be
 created. If it exists, the proxies will be appended to it (the file won't be
@@ -99,13 +99,13 @@ following structure:
 * `speed`: the speed level of the proxy (type: `TEXT`)
 * `connection_time`: the connection time of the proxy (type: `TEXT`)
 
-### `countries_file`
+### Countries file
 
 The script will only return proxies based in the countries specified in this
 file. To see a complete list of the available countries, see the file
 `countries_all`.
 
-### `ports`
+### Ports
 
 The script will only return proxies listening on the specified ports. You can
 specify up to 20 different ports. For example:
@@ -114,7 +114,7 @@ specify up to 20 different ports. For example:
 
 will only return proxies listening either on port 80, 8080, or 443.
 
-### `protocols`
+### Protocols
 
 The script will only return proxies using the specified protocols. The possible
 protocols are HTTP, HTTPS, and SOCKS4/5. For example:
@@ -123,7 +123,7 @@ protocols are HTTP, HTTPS, and SOCKS4/5. For example:
 
 will only return proxies using HTTP or SOCKS4/5.
 
-### `anonymity`
+### Anonymity
 
 The script will only return proxies guarantying an anonymity level greater
 than the one specified by the user. HideMyAss! proxies have these anonymity
@@ -157,16 +157,16 @@ This command:
 
 will only return proxies with an anonymity level of at least Medium.
 
-### `keep_alive`
+### Keep Alive
 
 As said on the HideMyAss! proxy list, proxies with the Keep Alive option are
-most likely honey pots. In order to avoir them, the script, by default, doesn't
+most likely honey pots. In order to avoid them, the script, by default, doesn't
 retrieve proxies with an anonymity level of High +KA. If you want proxies with
 the Keep Alive option, use this flag:
 
 	./hide_my_python.py -ka -o output.db
 
-### `speed`
+### Speed
 
 The script will only return proxies guarantying a speed level greater
 than the one specified by the user. HideMyAss! proxies have these speed 
@@ -189,7 +189,7 @@ This command:
 
 will only return proxies with a speed level of at least Fast.
 
-### `connection_time`
+### Connection time
 
 The script will only return proxies guarantying a connection time level greater
 than the one specified by the user. HideMyAss! proxies have these connection
