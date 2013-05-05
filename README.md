@@ -51,7 +51,7 @@ To see a list of the options, just issue:
 	usage: hide_my_python [-h] -o DATABASE_FILE [-ct COUNTRIES_FILE]
 	                      [-p PORTS [PORTS ...]]
 						  [-pr {http,https,socks} [{http,https,socks} ...]] [-a]
-						  [-s] [-c]
+						  [-ka] [-s] [-c]
 
 	A parser to retrieve proxies from HideMyAss!
 
