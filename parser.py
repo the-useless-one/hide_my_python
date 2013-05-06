@@ -72,14 +72,12 @@ def generate_proxy(args):
 	while True:
 		results_on_page = False
 		page += 1
-		proxy = 0
 		r = connect.send_data('{0}/{1}'.format(url, page), cookies=cookies)
 		html_content = r.text
 
 		#print(len(re.findall('<td><span><style>', html_content)))
 		for proxy_html in regex.PROXY_HTML.findall(html_content):
 			results_on_page = True
-			proxy += 1
 			yield parse_proxy(proxy_html)
 
 		if not results_on_page:
