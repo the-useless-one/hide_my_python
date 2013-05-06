@@ -30,7 +30,7 @@ using these proxies. If someone gets pwned, don't look at me.
 
 ## REQUIREMENTS
 
-All you need is Python, and the PycURL library.
+All you need is Python 3, and the Python requests library.
 
 ## USAGE
 

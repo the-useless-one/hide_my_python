@@ -4,7 +4,7 @@
 import re
 
 # This regex corresponds to the HTML code describing a proxy
-PROXY_HTML = re.compile(r'<tr class="".*?</tr>', flags=re.DOTALL)
+PROXY_HTML = re.compile(r'<tr class=".*?</tr>', flags=re.DOTALL)
 
 # This regex corresponds to the HTML code containing the IP:port of a proxy
 IP_PORT_HTML = re.compile(r'<td><span><style>.*?</td>\s*<td>.*?</td>',

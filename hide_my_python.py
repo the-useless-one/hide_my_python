@@ -1,9 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 
 import sys
 import argparse
-import connect
 import parser
 import database
 
@@ -77,8 +76,8 @@ def main():
 		args.ports = list(set(args.ports))
 		# If too many ports were specified, we exit with an error
 		if len(args.ports) > 20:
-			print >>sys.stderr,\
-			'error: too many ports specified (max: 20 ports)'
+			print('error: too many ports specified (max: 20 ports)',
+					file=sys.stderr)
 			sys.exit(-1)
 		# Otherwise, we create a comma-separated string
 		else:

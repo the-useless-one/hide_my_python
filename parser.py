@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 
 import re
@@ -63,11 +63,25 @@ def parse_proxy(proxy_html):
 def generate_proxy(args):
 	# We build the post request, using the arguments specified by the user
 	post_request = connect.build_post_request(args)
+	page = 0
+	r = connect.send_data('https://hidemyass.com/proxy-list/',
+			data = post_request, allow_redirects=False)
+	url = 'https://hidemyass.com{0}'.format(r.headers['Location'])
+	cookies = {'PHPSESSID' : r.cookies['PHPSESSID']}
 
-	# We recover the HTML code
-	html = connect.send_data('https://hidemyass.com/proxy-list/', post_request)
+	while True:
+		results_on_page = False
+		page += 1
+		proxy = 0
+		r = connect.send_data('{0}/{1}'.format(url, page), cookies=cookies)
+		html_content = r.text
 
-	# We find every chunk of code corresponding to a proxy in the HTML code
-	for proxy_html in regex.PROXY_HTML.findall(html):
-		yield parse_proxy(proxy_html)
+		#print(len(re.findall('<td><span><style>', html_content)))
+		for proxy_html in regex.PROXY_HTML.findall(html_content):
+			results_on_page = True
+			proxy += 1
+			yield parse_proxy(proxy_html)
+
+		if not results_on_page:
+			break
 
