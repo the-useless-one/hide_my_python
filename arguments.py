@@ -85,6 +85,9 @@ def create_argument_parser():
 					level, e.g. -c sets the minimum connection time level to\
 					Medium, -cc to Fast (default minimum level: Slow)')
 
+	arg_parser.add_argument('-v', action='store_true', dest='verbose',
+			help='explain what is being done')
+
 	return arg_parser
 
 def process_arguments(args, arg_parser):
@@ -130,8 +133,8 @@ def process_arguments(args, arg_parser):
 							port)
 					arg_parser.error(error_msg)
 				# We delete the last comma
-				ports_string = ports_string[:-2]
-				args.ports = ports_string
+			ports_string = ports_string[:-2]
+			args.ports = ports_string
 	# If no ports were specified, we do nothing
 	else:
 		args.ports = ''
@@ -154,4 +157,47 @@ def process_arguments(args, arg_parser):
 	# The maximum connection time level is 3
 	if args.connection_time > 3:
 		args.connection_time = 3
+
+def print_arguments(args):
+	# We display the number of proxies
+	if args.number_of_proxies > 0:
+		number = args.number_of_proxies
+	else:
+		number = 'all'
+	print('[info] number of proxies: {0}'.format(number))
+
+	# We display the first five countries
+	if len(args.countries_list) <= 5:
+		countries = args.countries_list
+	else:
+		countries = '{0} and {1} more' 
+		countries = countries.format(args.countries_list[0:5],
+				len(args.countries_list) - 5)
+	print('[info] countries: {0}'.format(countries))
+
+	# We display the ports
+	if args.ports:
+		ports = args.ports
+	else:
+		ports = 'all'
+	print('[info] ports: {0}'.format(ports))
+
+	# We display the protocols
+	print('[info] protocols: {0}'.format(args.protocols))
+
+	# We display the anonymity levels
+	anonymity_levels = ['None', 'Low', 'Medium', 'High']
+	if args.keep_alive:
+		anonymity_levels.append('High +KA')
+	print('[info] anonymity: {0}'.format(
+		anonymity_levels[args.anonymity:]))
+
+	# We display the speed levels
+	speed_levels = ['Slow', 'Medium', 'High']
+	print('[info] speed: {0}'.format(speed_levels[args.speed:]))
+
+	# We display the speed levels
+	connection_time_levels = ['Slow', 'Medium', 'High']
+	print('[info] connection time: {0}'.format(
+		connection_time_levels[args.connection_time:]))
 

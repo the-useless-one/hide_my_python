@@ -51,7 +51,7 @@ To see a list of the options, just issue:
 	usage: hide_my_python [-h] -o DATABASE_FILE [-n NUMBER_OF_PROXIES]
 						  [-ct COUNTRIES_FILE] [-p PORTS [PORTS ...]]
 						  [-pr {http,https,socks} [{http,https,socks} ...]] [-a]
-						  [-ka] [-s] [-c]
+						  [-ka] [-s] [-c] [-v]
 
 	A parser to retrieve proxies from HideMyAss!
 
@@ -80,6 +80,7 @@ To see a list of the options, just issue:
 							time level, e.g. -c sets the minimum connection time
 							level to Medium, -cc to Fast (default minimum level:
 							Slow)
+	  -v                    explain what is being done
 
 	Go to https://hidemyass.com/proxy-list/ to see the different available
 	options.
@@ -221,6 +222,21 @@ This command:
 	./hide_my_python.py -cc -o output.db
 
 will only return proxies with a connection time level of at least Fast.
+
+### Verbose mode
+
+If the `-v` flag is used, the script will described what is being done.
+First, it will display the arguments, then it will print the progress of the
+parsing.
+
+	./hide_my_python.py -o output.db -p 80 8080 -n 100 -v > verbose_output
+	[info] number of proxies: 100
+	[info] countries: ['China', 'Indonesia', 'United States', 'Brazil', 'Venezuela'] and 86 more
+	[info] ports: 80, 8080
+	[info] protocols: ['http', 'https', 'socks']
+	[info] anonymity: ['None', 'Low', 'Medium', 'High']
+	[info] speed: ['Medium', 'High']
+	[info] retrieved 100/100 proxies
 
 ## COPYRIGHT
 

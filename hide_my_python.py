@@ -34,14 +34,22 @@ def main():
 	args = arg_parser.parse_args(sys.argv[1:])
 	arguments.process_arguments(args, arg_parser)
 
+	# If the verbose mode is on, we display the arguments
+	if args.verbose:
+		arguments.print_arguments(args)
+
 	# We open the database file where the proxies will be stored
 	connection, cursor = database.initialize_database(args.database_file)
 
-	# We generate the proxies
-	for proxy in parser.generate_proxy(args):
-		print(proxy)
-		# And we store them in the database
-		database.insert_in_database(cursor, proxy)
+	try:
+		# We generate the proxies
+		for proxy in parser.generate_proxy(args):
+			# And we store them in the database
+			database.insert_in_database(cursor, proxy)
+	except KeyboardInterrupt:
+		if args.verbose:
+			print('')
+			print('[warn] received interruption signal')
 
 	# We save the changes made to the database, and close the file
 	connection.commit()

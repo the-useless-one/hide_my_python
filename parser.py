@@ -133,6 +133,15 @@ def generate_proxy(args):
 				break
 			# Otherwise, we generate a proxy
 			else:
+				# If the verbose mode is on, we display how many proxies
+				# we've retrieved
+				if args.verbose:
+					info_msg = 'retrieved {0}'.format(number_of_proxies)
+					if args.number_of_proxies > 0:
+						info_msg += '/{0} proxies'.format(args.number_of_proxies)
+					else:
+						info_msg += ' proxies'
+					print('\r[info] {0}'.format(info_msg), end='')
 				yield parse_proxy(proxy_html)
 
 		# If no results were found on the page,
