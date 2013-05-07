@@ -58,7 +58,7 @@ To see a list of the options, just issue:
 	optional arguments:
 	  -h, --help            show this help message and exit
 	  -o DATABASE_FILE      database file where the proxies will be saved
-	  -n NUMBER_OF_PROXIES  maximum number of proxies to retrieve (default: all
+	  -n NUMBER_OF_PROXIES  maximum number of proxies to retrieve (default: all)
 	  -ct COUNTRIES_FILE    file containing the countries where the proxies can be
 							based (default: countries_all)
 	  -p PORTS [PORTS ...]  list of ports (max: 20 ports) the proxies listen on
