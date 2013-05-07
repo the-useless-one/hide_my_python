@@ -48,8 +48,8 @@ Don't forget to make the script executable with:
 To see a list of the options, just issue:
 
 	./hide_my_python.py -h
-	usage: hide_my_python [-h] -o DATABASE_FILE [-ct COUNTRIES_FILE]
-	                      [-p PORTS [PORTS ...]]
+	usage: hide_my_python [-h] -o DATABASE_FILE [-n NUMBER_OF_PROXIES]
+						  [-ct COUNTRIES_FILE] [-p PORTS [PORTS ...]]
 						  [-pr {http,https,socks} [{http,https,socks} ...]] [-a]
 						  [-ka] [-s] [-c]
 
@@ -58,12 +58,13 @@ To see a list of the options, just issue:
 	optional arguments:
 	  -h, --help            show this help message and exit
 	  -o DATABASE_FILE      database file where the proxies will be saved
+	  -n NUMBER_OF_PROXIES  maximum number of proxies to retrieve (default: all
 	  -ct COUNTRIES_FILE    file containing the countries where the proxies can be
 							based (default: countries_all)
 	  -p PORTS [PORTS ...]  list of ports (max: 20 ports) the proxies listen on
-	                    	(default: every port)
+							(default: every port)
 	  -pr {http,https,socks} [{http,https,socks} ...]
-	                        protocols used by the proxies (default: HTTP, HTTPS
+							protocols used by the proxies (default: HTTP, HTTPS
 							and SOCKS4/5)
 	  -a                    flag used to determine the proxies minimum anonymity
 							level, e.g. -a sets the minimum anonymity level to
@@ -76,7 +77,7 @@ To see a list of the options, just issue:
 							level, e.g. -s sets the minimum speed level to Medium,
 							-ss to Fast (default minimum level: Slow)
 	  -c                    flag used to determine the proxies minimum connection
-	                        time level, e.g. -c sets the minimum connection time
+							time level, e.g. -c sets the minimum connection time
 							level to Medium, -cc to Fast (default minimum level:
 							Slow)
 
@@ -98,6 +99,15 @@ following structure:
 * `anonymity`: the anonymity level guarantied by the proxy (type: `TEXT`)
 * `speed`: the speed level of the proxy (type: `TEXT`)
 * `connection_time`: the connection time of the proxy (type: `TEXT`)
+
+### Number of proxies
+
+If this argument is defined, the script will only return the first `n`
+proxies he finds. Otherwise, every found proxy will be returned. For example:
+
+	./hide_my_python.py -n 25 -o output.db
+
+will only return the first 25 proxies.
 
 ### Countries file
 
