@@ -95,10 +95,9 @@ def process_arguments(args, arg_parser):
 	# If the given number of proxies is negative,
 	# we return an error
 	if args.number_of_proxies < 0:
-		error_msg = '{0}: error: argument {1}: invalid value '\
-				+ '(a positive integer is required): {2}'
-		error_msg = error_msg.format(arg_parser.prog, '-n',
-				args.number_of_proxies)
+		error_msg = 'argument {9}: invalid value '\
+				+ '(a positive integer is required): {1}'
+		error_msg = error_msg.format('-n', args.number_of_proxies)
 		arg_parser.error(error_msg)
 
 	# We retrieve the countries from the given file
@@ -113,10 +112,9 @@ def process_arguments(args, arg_parser):
 		args.ports = list(set(args.ports))
 		# If too many ports were specified, we exit with an error
 		if len(args.ports) > 20:
-			error_msg = '{0}: error: argument {1}: invalid value '\
-					+ '(maximum 20 ports): {2} ports given'
-			error_msg = error_msg .format(arg_parser.prog, '-p',
-					len(args.ports))
+			error_msg = 'argument {0}: invalid value '\
+					+ '(maximum 20 ports): {1} ports given'
+			error_msg = error_msg .format('-p', len(args.ports))
 			arg_parser.error(error_msg)
 		# Otherwise, we create a comma-separated string
 		else:
@@ -127,10 +125,9 @@ def process_arguments(args, arg_parser):
 					ports_string += '{0}, '.format(port)
 				# Otherwise, we raise an error
 				else:
-					error_msg = '{0}: error: argument {1}: invalid value '\
-							+ '(port must be between 1 and 65535): {2}' 
-					error_msg = error_msg .format(arg_parser.prog, '-p',
-							port)
+					error_msg = 'argument {0}: invalid value '\
+							+ '(port must be between 1 and 65535): {1}' 
+					error_msg = error_msg .format('-p', port)
 					arg_parser.error(error_msg)
 				# We delete the last comma
 			ports_string = ports_string[:-2]
