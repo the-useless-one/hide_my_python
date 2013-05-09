@@ -1,5 +1,26 @@
 #!/usr/bin/env python3
-# -*- coding: utf8 -*-
+# 	-*- coding: utf8 -*-
+#
+# 	HideMyPython! - A parser for the free proxy list on HideMyAss!
+#
+#	This file is used to parse the result page from the HideMyAss! proxy list.
+#	The parse_ functions retrieve the proxy's parameters.
+#	The last function is a generator, which yields proxies.
+#
+# 	Copyright (C) 2013 Yannick Méheut <useless@utouch.fr>
+# 
+# 	This program is free software: you can redistribute it and/or modify
+# 	it under the terms of the GNU General Public License as published by
+# 	the Free Software Foundation, either version 3 of the License, or
+# 	(at your option) any later version.
+# 
+# 	This program is distributed in the hope that it will be useful,
+# 	but WITHOUT ANY WARRANTY; without even the implied warranty of
+# 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# 	GNU General Public License for more details.
+# 
+# 	You should have received a copy of the GNU General Public License
+# 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
 import regex
@@ -63,22 +84,68 @@ def parse_proxy(proxy_html):
 def generate_proxy(args):
 	# We build the post request, using the arguments specified by the user
 	post_request = connect.build_post_request(args)
+
+	# This variable will be used to retrieve every page
+	# of the search result
 	page = 0
+
+	# If no maximum number of proxies was given as an argument,
+	# we retrieve every proxy
+	retrieve_all = (args.number_of_proxies == 0)
+	keep_retrieving = True
+	number_of_proxies = 0
+
+	# When you do a search, HideMyAss! redirects you to a page.
+	# We retrieve the result page's URL
 	r = connect.send_data('https://hidemyass.com/proxy-list/',
 			data = post_request, allow_redirects=False)
 	url = 'https://hidemyass.com{0}'.format(r.headers['Location'])
+
+	# HideMyAss! checks this cookie to see if you're a legit user
+	# (and we totally are!)
 	cookies = {'PHPSESSID' : r.cookies['PHPSESSID']}
 
-	while True:
+	while keep_retrieving:
+		# Even if a page doesn't exist, HideMyAss! doesn't respond
+		# with a 404, so we use this boolean to check if any proxy
+		# was found on the page
 		results_on_page = False
+
+		# We increment the page number
 		page += 1
+
+		# We retrieve the result from the page
 		r = connect.send_data('{0}/{1}'.format(url, page), cookies=cookies)
 		html_content = r.text
 
 		for proxy_html in regex.PROXY_HTML.findall(html_content):
+			# A proxy was found on the page
 			results_on_page = True
-			yield parse_proxy(proxy_html)
 
+			# We increment the number of proxies
+			number_of_proxies += 1
+
+			# If a maximum number of proxies was set and we
+			# are above this limit, we stop retrieving proxies
+			if (not retrieve_all and
+				number_of_proxies > args.number_of_proxies):
+				keep_retrieving = False
+				break
+			# Otherwise, we generate a proxy
+			else:
+				# If the verbose mode is on, we display how many proxies
+				# we've retrieved
+				if args.verbose:
+					info_msg = 'retrieved {0}'.format(number_of_proxies)
+					if args.number_of_proxies > 0:
+						info_msg += '/{0} proxies'.format(args.number_of_proxies)
+					else:
+						info_msg += ' proxies'
+					print('\r[info] {0}'.format(info_msg), end='')
+				yield parse_proxy(proxy_html)
+
+		# If no results were found on the page,
+		# we stop retrieving proxies
 		if not results_on_page:
-			break
+			keep_retrieving = False
 

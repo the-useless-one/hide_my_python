@@ -1,118 +1,55 @@
 #!/usr/bin/env python3
-# -*- coding: utf8 -*-
+# 	-*- coding: utf8 -*-
+#
+# 	HideMyPython! - A parser for the free proxy list on HideMyAss!
+#
+#	This file contains the main function of the HideMyPython! script.
+#	It parses the arguments, creates a database, and save the proxies.
+#
+# 	Copyright (C) 2013 Yannick Méheut <useless@utouch.fr>
+# 
+# 	This program is free software: you can redistribute it and/or modify
+# 	it under the terms of the GNU General Public License as published by
+# 	the Free Software Foundation, either version 3 of the License, or
+# 	(at your option) any later version.
+# 
+# 	This program is distributed in the hope that it will be useful,
+# 	but WITHOUT ANY WARRANTY; without even the implied warranty of
+# 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# 	GNU General Public License for more details.
+# 
+# 	You should have received a copy of the GNU General Public License
+# 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-import argparse
+import arguments
 import parser
 import database
 
 def main():
-	arg_parser = argparse.ArgumentParser(
-			prog='hide_my_python',
-			description='A parser to retrieve proxies from HideMyAss!',
-			epilog='Go to https://hidemyass.com/proxy-list/ to see the\
-					different available options.')
-
-	# The user has to specify an output file
-	arg_parser.add_argument('-o', dest='database_file', type=str,
-			required=True,
-			help='database file where the proxies will be saved')
-
-	# The user can specify a list of countries
-	arg_parser.add_argument('-ct', default='countries_all',
-			dest='countries_file', type=argparse.FileType('r'),
-			help='file containing the countries where the\
-					proxies can be based (default: %(default)s)')
-
-	# The user can specify a list of ports
-	arg_parser.add_argument('-p', type=int, nargs='+', dest='ports',
-			help='list of ports (max: 20 ports) the proxies listen on\
-					(default: every port)')
-
-	# The user can specify a list of protocols
-	arg_parser.add_argument('-pr', type=str, nargs='+',
-			choices=['http', 'https', 'socks'], dest='protocols',
-			help='protocols used by the proxies\
-					(default: HTTP, HTTPS and SOCKS4/5)')
-
-	# The user can specify the anonymity level
-	arg_parser.add_argument('-a', default=0, action='count', dest='anonymity',
-			help='flag used to determine the proxies minimum anonymity\
-					level, e.g. -a sets the minimum anonymity level to Low,\
-					-aa to Medium, -aaa to High, etc. (default minimum level:\
-					None)')
-
-	arg_parser.add_argument('-ka', action='store_true',
-			dest='keep_alive',
-			help='flag used to determine if proxies with the Keep Alive\
-					option should be returned, as they are likely honey pots\
-					(default: no)')
-
-	# The user can specify the required speed
-	arg_parser.add_argument('-s', default=1, action='count', dest='speed',
-			help='flag used to determine the proxies minimum speed\
-					level, e.g. -s sets the minimum speed level to Medium,\
-					-ss to Fast (default minimum level: Slow)')
-
-	# The user can specify the connection time
-	arg_parser.add_argument('-c', default=1, action='count',
-			dest='connection_time',
-			help='flag used to determine the proxies minimum connection time\
-					level, e.g. -c sets the minimum connection time level to\
-					Medium, -cc to Fast (default minimum level: Slow)')
+	# We create an argument parser
+	arg_parser = arguments.create_argument_parser()
 
 	# We parse the arguments
 	args = arg_parser.parse_args(sys.argv[1:])
+	arguments.process_arguments(args, arg_parser)
 
-	# We retrieve the countries from the given file
-	args.countries_list = []
-	for country in args.countries_file.readlines():
-		country = country.rstrip()
-		args.countries_list.append(country)
-
-	# If ports were specified
-	if args.ports:
-		# We delete the duplicates
-		args.ports = list(set(args.ports))
-		# If too many ports were specified, we exit with an error
-		if len(args.ports) > 20:
-			print('error: too many ports specified (max: 20 ports)',
-					file=sys.stderr)
-			sys.exit(-1)
-		# Otherwise, we create a comma-separated string
-		else:
-			args.ports = ', '.join(map(str, args.ports))
-	# If no ports were specified, we do nothing
-	else:
-		args.ports = ''
-
-	# If no protocol was specified, we consider every possible protocol
-	if not args.protocols:
-		args.protocols = ['http', 'https', 'socks']
-	# Otherwise, we delete the duplicates
-	else:
-		args.protocols = list(set(args.protocols))
-
-	# The maximum anonymity level is 4
-	if args.anonymity > 4:
-		args.anonymity = 4
-
-	# The maximum speed level is 3
-	if args.speed > 3:
-		args.speed = 3
-
-	# The maximum connection time level is 3
-	if args.connection_time > 3:
-		args.connection_time = 3
+	# If the verbose mode is on, we display the arguments
+	if args.verbose:
+		arguments.print_arguments(args)
 
 	# We open the database file where the proxies will be stored
 	connection, cursor = database.initialize_database(args.database_file)
 
-	# We generate the proxies
-	for proxy in parser.generate_proxy(args):
-		print(proxy)
-		# And we store them in the database
-		database.insert_in_database(cursor, proxy)
+	try:
+		# We generate the proxies
+		for proxy in parser.generate_proxy(args):
+			# And we store them in the database
+			database.insert_in_database(cursor, proxy)
+	except KeyboardInterrupt:
+		if args.verbose:
+			print('')
+			print('[warn] received interruption signal')
 
 	# We save the changes made to the database, and close the file
 	connection.commit()
