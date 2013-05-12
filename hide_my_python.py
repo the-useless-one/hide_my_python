@@ -6,7 +6,7 @@
 #	This file contains the main function of the HideMyPython! script.
 #	It parses the arguments, creates a database, and save the proxies.
 #
-# 	Copyright (C) 2013 Yannick Méheut <useless@utouch.fr>
+# 	Copyright (C) 2013 Yannick Méheut <useless (at) utouch (dot) fr>
 # 
 # 	This program is free software: you can redistribute it and/or modify
 # 	it under the terms of the GNU General Public License as published by

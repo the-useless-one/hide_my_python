@@ -8,7 +8,7 @@
 #	given on the command line.
 #	The second function is used to GET/POST data.
 #
-# 	Copyright (C) 2013 Yannick Méheut <useless@utouch.fr>
+# 	Copyright (C) 2013 Yannick Méheut <useless (at) utouch (dot) fr>
 # 
 # 	This program is free software: you can redistribute it and/or modify
 # 	it under the terms of the GNU General Public License as published by

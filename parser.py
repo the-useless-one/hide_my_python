@@ -7,7 +7,7 @@
 #	The parse_ functions retrieve the proxy's parameters.
 #	The last function is a generator, which yields proxies.
 #
-# 	Copyright (C) 2013 Yannick Méheut <useless@utouch.fr>
+# 	Copyright (C) 2013 Yannick Méheut <useless (at) utouch (dot) fr>
 # 
 # 	This program is free software: you can redistribute it and/or modify
 # 	it under the terms of the GNU General Public License as published by

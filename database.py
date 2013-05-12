@@ -5,7 +5,7 @@
 #
 #	This file is used to create the database and the store the proxies in it.
 #
-# 	Copyright (C) 2013 Yannick Méheut <useless@utouch.fr>
+# 	Copyright (C) 2013 Yannick Méheut <useless (at) utouch (dot) fr>
 # 
 # 	This program is free software: you can redistribute it and/or modify
 # 	it under the terms of the GNU General Public License as published by
