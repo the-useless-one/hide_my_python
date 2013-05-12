@@ -229,7 +229,7 @@ If the `-v` flag is used, the script will described what is being done.
 First, it will display the arguments, then it will print the progress of the
 parsing.
 
-	./hide_my_python.py -o output.db -p 80 8080 -n 100 -v > verbose_output
+	./hide_my_python.py -o output.db -p 80 8080 -n 100 -v
 	[info] number of proxies: 100
 	[info] countries: ['China', 'Indonesia', 'United States', 'Brazil', 'Venezuela'] and 86 more
 	[info] ports: 80, 8080
@@ -242,7 +242,7 @@ parsing.
 
 HideMyPython! - A parser for the free proxy list on HideMyAss!
 
-Yannick Méheut [<useless@utouch.fr>] - Copyright © 2013
+Yannick Méheut [<useless (at) utouch (dot) fr>] - Copyright © 2013
 
 This program is free software: you can redistribute it and/or modify it 
 under the terms of the GNU General Public License as published by the 
