@@ -242,7 +242,7 @@ parsing.
 
 HideMyPython! - A parser for the free proxy list on HideMyAss!
 
-Yannick Méheut [<useless (at) utouch (dot) fr>] - Copyright © 2013
+Yannick Méheut [useless (at) utouch (dot) fr] - Copyright © 2013
 
 This program is free software: you can redistribute it and/or modify it 
 under the terms of the GNU General Public License as published by the 
