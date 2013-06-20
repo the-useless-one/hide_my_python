@@ -33,8 +33,8 @@ def insert_in_database(cursor, proxy):
 		return
 
 	# Otherwise, we save it
-	cursor.execute('INSERT INTO proxies (ip, port, type, country, anonymity,\
-			speed, connection_time) VALUES (?, ?, ?, ?, ?, ?, ?)', proxy)	
+	cursor.execute('INSERT INTO proxies (ip, port, type, country, anonymity, '
+			'speed, connection_time) VALUES (?, ?, ?, ?, ?, ?, ?)', proxy)
 
 def initialize_database(database_file):
 	# We connect to the database file
@@ -43,9 +43,9 @@ def initialize_database(database_file):
 
 	# We create the table where the proxies will be stored
 	try:
-		cursor.execute('CREATE TABLE proxies (id INTEGER PRIMARY KEY\
-				AUTOINCREMENT, ip TEXT, port INTEGER, type TEXT, country TEXT,\
-				anonymity TEXT, speed TEXT, connection_time TEXT)')
+		cursor.execute('CREATE TABLE proxies (id INTEGER PRIMARY KEY '
+				'AUTOINCREMENT, ip TEXT, port INTEGER, type TEXT, country TEXT, '
+				'anonymity TEXT, speed TEXT, connection_time TEXT)')
 	# If there's already such a table, we don't have anything to do
 	except sqlite3.OperationalError:
 		pass

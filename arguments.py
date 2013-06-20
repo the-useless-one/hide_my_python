@@ -29,8 +29,8 @@ def create_argument_parser():
 	arg_parser = argparse.ArgumentParser(
 			prog='hide_my_python',
 			description='A parser to retrieve proxies from HideMyAss!',
-			epilog='Go to https://hidemyass.com/proxy-list/ to see the\
-					different available options.')
+			epilog='Go to https://hidemyass.com/proxy-list/ to see the '
+					'different available options.')
 
 	# The user has to specify an output file
 	arg_parser.add_argument('-o', dest='database_file', type=str,
@@ -45,45 +45,45 @@ def create_argument_parser():
 	# The user can specify a list of countries
 	arg_parser.add_argument('-ct', default='countries_all',
 			dest='countries_file', type=argparse.FileType('r'),
-			help='file containing the countries where the\
-					proxies can be based (default: %(default)s)')
+			help='file containing the countries where the '
+					'proxies can be based (default: %(default)s)')
 
 	# The user can specify a list of ports
 	arg_parser.add_argument('-p', type=int, nargs='+', dest='ports',
-			help='list of ports (max: 20 ports) the proxies listen on\
-					(default: every port)')
+			help='list of ports (max: 20 ports) the proxies listen on '
+					'(default: every port)')
 
 	# The user can specify a list of protocols
 	arg_parser.add_argument('-pr', type=str, nargs='+',
 			choices=['http', 'https', 'socks'], dest='protocols',
-			help='protocols used by the proxies\
-					(default: HTTP, HTTPS and SOCKS4/5)')
+			help='protocols used by the proxies '
+					'(default: HTTP, HTTPS and SOCKS4/5)')
 
 	# The user can specify the anonymity level
 	arg_parser.add_argument('-a', default=0, action='count', dest='anonymity',
-			help='flag used to determine the proxies minimum anonymity\
-					level, e.g. -a sets the minimum anonymity level to Low,\
-					-aa to Medium, -aaa to High, etc. (default minimum level:\
-					None)')
+			help='flag used to determine the proxies minimum anonymity '
+					'level, e.g. -a sets the minimum anonymity level to Low, '
+					'-aa to Medium, -aaa to High, etc. (default minimum level: '
+					'None)')
 
 	arg_parser.add_argument('-ka', action='store_true',
 			dest='keep_alive',
-			help='flag used to determine if proxies with the Keep Alive\
-					option should be returned, as they are likely honey pots\
-					(default: no)')
+			help='flag used to determine if proxies with the Keep Alive '
+					'option should be returned, as they are likely honey pots '
+					'(default: no)')
 
 	# The user can specify the required speed
 	arg_parser.add_argument('-s', default=1, action='count', dest='speed',
-			help='flag used to determine the proxies minimum speed\
-					level, e.g. -s sets the minimum speed level to Medium,\
-					-ss to Fast (default minimum level: Slow)')
+			help='flag used to determine the proxies minimum speed '
+					'level, e.g. -s sets the minimum speed level to Medium, '
+					'-ss to Fast (default minimum level: Slow)')
 
 	# The user can specify the connection time
 	arg_parser.add_argument('-c', default=1, action='count',
 			dest='connection_time',
-			help='flag used to determine the proxies minimum connection time\
-					level, e.g. -c sets the minimum connection time level to\
-					Medium, -cc to Fast (default minimum level: Slow)')
+			help='flag used to determine the proxies minimum connection time '
+					'level, e.g. -c sets the minimum connection time level to '
+					'Medium, -cc to Fast (default minimum level: Slow)')
 
 	arg_parser.add_argument('-v', action='store_true', dest='verbose',
 			help='explain what is being done')
