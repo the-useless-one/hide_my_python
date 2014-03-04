@@ -23,6 +23,8 @@
 # 	You should have received a copy of the GNU General Public License
 # 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+import sys
 import argparse
 
 def create_argument_parser():
@@ -43,7 +45,8 @@ def create_argument_parser():
 			help='maximum number of proxies to retrieve (default: all)')
 
 	# The user can specify a list of countries
-	arg_parser.add_argument('-ct', default='countries_all',
+	arg_parser.add_argument('-ct',
+            default='{0}/countries_all'.format(os.path.dirname(sys.argv[0])),
 			dest='countries_file', type=argparse.FileType('r'),
 			help='file containing the countries where the '
 					'proxies can be based (default: %(default)s)')
@@ -95,7 +98,7 @@ def process_arguments(args, arg_parser):
 	# If the given number of proxies is negative,
 	# we return an error
 	if args.number_of_proxies < 0:
-		error_msg = 'argument {9}: invalid value '\
+		error_msg = 'argument {0}: invalid value '\
 				+ '(a positive integer is required): {1}'
 		error_msg = error_msg.format('-n', args.number_of_proxies)
 		arg_parser.error(error_msg)
