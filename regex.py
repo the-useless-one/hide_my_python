@@ -48,24 +48,25 @@ TAGS = re.compile(r'<[^>]*>')
 
 # This regex is used to recover the HTML code containing the country in the
 # proxy HTML code
-COUNTRY_HTML = re.compile(r'<span class="country">.*?</span>')
+COUNTRY_HTML = re.compile(r'<span class="country".*?>.*?</span>',
+        re.DOTALL)
 
 # This regex is used to recover the country
-COUNTRY = re.compile(r'/> ([a-zA-Z, ]*)')
+COUNTRY = re.compile(r'([a-zA-Z, ]*)</span>')
 
 # This regex is used to recover the HTML code containing the speed in the
 # proxy HTML code
-SPEED_HTML = re.compile(r'<div class="speedbar response.*?>(.*?)</div>',
+SPEED_HTML = re.compile(r'<div class="progress-indicator.*?levels="speed" rel.*?>(.*?)</div>',
 		flags=re.DOTALL)
 # This regex is used to recover the speed
-SPEED = re.compile(r'class="(.*?)"')
+SPEED = re.compile(r'style="width: (\d+)%')
 
 # This regex is used to recover the HTML code containing the connection time in
 # the proxy HTML code
-CONNECT_TIME_HTML = re.compile(r'<div class="speedbar response.*?>(.*?)</div>',
+CONNECT_TIME_HTML = re.compile(r'<div class="progress-indicator.*?levels="speed">(.*?)</div>',
 		flags=re.DOTALL)
 # This regex is used to recover the connection time
-CONNECT_TIME = re.compile(r'class="(.*?)"')
+CONNECT_TIME = re.compile(r'style="width: (\d+)%')
 
 # This regex is used to recover the type and anonymity level in the proxy
 # HTML code

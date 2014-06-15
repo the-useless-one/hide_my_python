@@ -194,10 +194,10 @@ def print_arguments(args):
 
 	# We display the speed levels
 	speed_levels = ['Slow', 'Medium', 'High']
-	print('[info] speed: {0}'.format(speed_levels[args.speed:]))
+	print('[info] speed: {0}'.format(speed_levels[args.speed - 1:]))
 
 	# We display the speed levels
 	connection_time_levels = ['Slow', 'Medium', 'High']
 	print('[info] connection time: {0}'.format(
-		connection_time_levels[args.connection_time:]))
+		connection_time_levels[args.connection_time - 1:]))
 
