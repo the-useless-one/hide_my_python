@@ -23,9 +23,9 @@
 # 	You should have received a copy of the GNU General Public License
 # 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
 import sys
 import argparse
+from os import path
 
 def create_argument_parser():
 	arg_parser = argparse.ArgumentParser(
@@ -46,7 +46,7 @@ def create_argument_parser():
 
 	# The user can specify a list of countries
 	arg_parser.add_argument('-ct',
-            default='{0}/countries_all'.format(os.path.dirname(sys.argv[0])),
+            default=path.join(path.dirname(sys.argv[0]), 'countries_all'),
 			dest='countries_file', type=argparse.FileType('r'),
 			help='file containing the countries where the '
 					'proxies can be based (default: %(default)s)')
